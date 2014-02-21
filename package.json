@@ -1,0 +1,16 @@
+{
+  "name": "broccoli-es6-module-filter",
+  "version": "0.1.0",
+  "description": "broccoli filter for es6 modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Florence",
+  "license": "MIT",
+  "dependencies": {
+    "es6-module-transpiler": "~0.3.6",
+    "broccoli-filter": "0.0.1",
+    "extend": "~1.2.1"
+  }
+}
