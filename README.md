@@ -41,10 +41,16 @@ module.exports = function (broccoli) {
 };
 ```
 
+And then from the command line:
+
+```sh
+$ broccoli build output
+```
+
 Options
 -------
 
-- `moduleType` - one of `amd` and `cjs`.
+- `moduleType` - one of `amd`, `cjs`, and `globals`.
 
 Currently all output is anonymous.
 

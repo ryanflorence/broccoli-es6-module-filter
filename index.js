@@ -26,11 +26,13 @@ ES6TranspilerFilter.prototype.targetExtension = 'js'
 
 var methods = {
   'cjs': 'toCJS',
-  'amd': 'toAMD'
+  'amd': 'toAMD',
+  'globals': 'toGlobals'
 };
 
-ES6TranspilerFilter.prototype.processString = function (fileContents) {
-  var compiler = new Compiler(fileContents, null, this.options);
+ES6TranspilerFilter.prototype.processString = function (fileContents, filePath) {
+  var name = this.options.anonymous ? null : filePath.replace('.js', '');
+  var compiler = new Compiler(fileContents, name, this.options);
   return compiler[methods[this.moduleType]]();
 };
 
