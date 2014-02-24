@@ -11,6 +11,9 @@ function ES6TranspilerFilter (inputTree, options) {
   if (!(this instanceof ES6TranspilerFilter)) return new ES6TranspilerFilter(inputTree, options);
   this.inputTree = inputTree;
   this.options = extend({}, this.defaults, options);
+  if (this.options.anonymous === false && !this.options.packageName) throw new Error('You must specify a packageName option when using the anonymous option');
+  this.packageName = this.options.packageName;
+  delete this.options.packageName;
   this.moduleType = this.options.moduleType;
   delete this.options.moduleType;
 }
@@ -31,7 +34,7 @@ var methods = {
 };
 
 ES6TranspilerFilter.prototype.processString = function (fileContents, filePath) {
-  var name = this.options.anonymous ? null : filePath.replace('.js', '');
+  var name = this.options.anonymous ? null : this.packageName+'/'+filePath.replace('.js', '');
   var compiler = new Compiler(fileContents, name, this.options);
   return compiler[methods[this.moduleType]]();
 };
