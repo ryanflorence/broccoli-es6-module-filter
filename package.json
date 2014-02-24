@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "es6-module-transpiler": "git://github.com/rpflorence/es6-module-transpiler#broccoli",
-    "broccoli-filter": "0.0.1",
+    "broccoli-filter": "0.1.0",
     "extend": "~1.2.1"
   }
 }
