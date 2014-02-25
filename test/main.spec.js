@@ -42,21 +42,25 @@ describe('broccoli-es6-module-filter', function() {
       assert.equal(filter.getName('foo/bar.js'), null);
     });
 
-    it('prepends packageName', function() {
-      var filter = new Filter(['lib'], {
-        anonymous: false,
-        packageName: 'hooba'
-      }); 
-      assert.equal(filter.getName('foo/bar.js'), 'hooba/foo/bar');
-    });
-
-    it('is packageName if the file matches the "main" option', function() {
-      var filter = new Filter(['lib'], {
-        anonymous: false,
-        packageName: 'package-name',
-        main: 'main'
+    describe('named amd', function() {
+      it('prepends packageName', function() {
+        var filter = new Filter(['lib'], {
+          moduleType: 'amd',
+          anonymous: false,
+          packageName: 'hooba'
+        }); 
+        assert.equal(filter.getName('foo/bar.js'), 'hooba/foo/bar');
       });
-      assert.equal(filter.getName('main.js'), 'package-name');
+
+      it('is packageName if the file matches the "main" option', function() {
+        var filter = new Filter(['lib'], {
+          moduleType: 'amd',
+          anonymous: false,
+          packageName: 'package-name',
+          main: 'main'
+        });
+        assert.equal(filter.getName('main.js'), 'package-name');
+      });
     });
   });
 

@@ -33,7 +33,11 @@ Filter.prototype.setOptions = function(options) {
 }
 
 Filter.prototype.validateOptions = function() {
-  if (this.compilerOptions.anonymous === false && !this.options.packageName) {
+  if (
+    this.options.moduleType == 'amd' &&
+    this.compilerOptions.anonymous === false &&
+    !this.options.packageName
+  ) {
     throw new Error('You must specify a `packageName` option when using the `anonymous: false` option');
   }
 }
@@ -47,6 +51,11 @@ var methods = {
 Filter.prototype.getName = function (filePath) {
   if (this.compilerOptions.anonymous) return null;
   var name = filePath.replace(/.js$/, '');
+  var method = this[this.options.moduleType+'Name'];
+  return method ? method.call(this, name) : name;
+};
+
+Filter.prototype.amdName = function (name) {
   var main = this.options.main;
   var packageName = this.options.packageName;
   return name === main ? packageName : packageName+'/'+name;
