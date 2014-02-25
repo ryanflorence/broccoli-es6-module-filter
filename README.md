@@ -51,6 +51,15 @@ Options
 -------
 
 - `moduleType` - one of `amd`, `cjs`, and `globals`.
+- `packageName` - for non-anonymous AMD builds, prepends `packageName/`
+  to your module names.
+- `main` - for non-anonymous AMD builds, which file is the main entry
+  point of your module that will be returned with
+  `require(['your-package'])`.
+- `anonymous` - for AMD builds, whether or not to name your modules.
+- Every option supported by the [transpiler][transpiler].
 
-Currently all output is anonymous.
+
+
+  [transpiler]:https://github.com/square/es6-module-transpiler
 

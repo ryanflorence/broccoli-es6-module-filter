@@ -16,7 +16,9 @@ function Filter(inputTree, options) {
 
 Filter.prototype.defaults = {
   anonymous: true,
-  moduleType: 'amd'
+  moduleType: 'amd',
+  packageName: null,
+  main: null
 };
 
 Filter.prototype.extensions = ['js']
