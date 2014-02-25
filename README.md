@@ -1,6 +1,8 @@
 broccoli-es6-module-filter
 ==========================
 
+[![Build Status](https://travis-ci.org/rpflorence/broccoli-es6-module-filter.png?branch=master)](https://travis-ci.org/rpflorence/broccoli-es6-module-filter)
+
 Transpile modules authored in ES6 to other module types.
 
 Installation
