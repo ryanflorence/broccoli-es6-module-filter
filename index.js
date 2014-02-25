@@ -54,7 +54,7 @@ Filter.prototype.getName = function (filePath) {
 
 Filter.prototype.processString = function (fileContents, filePath) {
   var name = this.getName(filePath);
-  var compiler = new Compiler(fileContents, name, this.options);
+  var compiler = new Compiler(fileContents, name, this.compilerOptions);
   return compiler[methods[this.options.moduleType]]();
 };
 
