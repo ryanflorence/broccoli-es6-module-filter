@@ -8,6 +8,15 @@
   },
   "author": "Ryan Florence",
   "license": "MIT",
+  "keywords": [
+    "broccoli-plugin",
+    "javascript",
+    "es6",
+    "module",
+    "transpile",
+    "amd",
+    "commonjs"
+  ],
   "dependencies": {
     "es6-module-transpiler": "git://github.com/rpflorence/es6-module-transpiler#broccoli",
     "broccoli-filter": "0.1.0",
