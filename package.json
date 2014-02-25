@@ -4,7 +4,7 @@
   "description": "broccoli filter for es6 modules",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/**/*.spec.js --reporter tap"
   },
   "author": "Ryan Florence",
   "license": "MIT",
@@ -21,5 +21,8 @@
     "es6-module-transpiler": "git://github.com/rpflorence/es6-module-transpiler#broccoli",
     "broccoli-filter": "0.1.0",
     "extend": "~1.2.1"
+  },
+  "devDependencies": {
+    "mocha": "^1.17.1"
   }
 }
