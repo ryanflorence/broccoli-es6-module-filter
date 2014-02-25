@@ -1,31 +1,40 @@
-var Filter = require('broccoli-filter')
+var BroccoliFilter = require('broccoli-filter')
 var Compiler = require('es6-module-transpiler').Compiler;
 var extend = require('extend');
 
-module.exports = ES6TranspilerFilter;
+module.exports = Filter;
+Filter.prototype = Object.create(BroccoliFilter.prototype);
+Filter.prototype.constructor = Filter;
 
-ES6TranspilerFilter.prototype = Object.create(Filter.prototype);
-ES6TranspilerFilter.prototype.constructor = ES6TranspilerFilter;
-
-function ES6TranspilerFilter (inputTree, options) {
-  if (!(this instanceof ES6TranspilerFilter)) return new ES6TranspilerFilter(inputTree, options);
+function Filter(inputTree, options) {
+  if (!(this instanceof Filter)) {
+    return new Filter(inputTree, options);
+  }
   this.inputTree = inputTree;
-  this.options = extend({}, this.defaults, options);
-  if (this.options.anonymous === false && !this.options.packageName) throw new Error('You must specify a packageName option when using the anonymous option');
-  this.packageName = this.options.packageName;
-  delete this.options.packageName;
-  this.moduleType = this.options.moduleType;
-  delete this.options.moduleType;
+  this.setOptions(options);
 }
 
-ES6TranspilerFilter.prototype.defaults = {
+Filter.prototype.defaults = {
   anonymous: true,
-  moduleType: 'cjs'
+  moduleType: 'amd'
 };
 
-ES6TranspilerFilter.prototype.extensions = ['js']
+Filter.prototype.extensions = ['js']
 
-ES6TranspilerFilter.prototype.targetExtension = 'js'
+Filter.prototype.targetExtension = 'js'
+
+Filter.prototype.setOptions = function(options) {
+  var merged = extend({}, this.defaults, options);
+  this.options = rip(merged, ['moduleType', 'packageName', 'main']);
+  this.compilerOptions = merged;
+  this.validateOptions();
+}
+
+Filter.prototype.validateOptions = function() {
+  if (this.compilerOptions.anonymous === false && !this.options.packageName) {
+    throw new Error('You must specify a `packageName` option when using the `anonymous: false` option');
+  }
+}
 
 var methods = {
   'cjs': 'toCJS',
@@ -33,9 +42,27 @@ var methods = {
   'globals': 'toGlobals'
 };
 
-ES6TranspilerFilter.prototype.processString = function (fileContents, filePath) {
-  var name = this.options.anonymous ? null : this.packageName+'/'+filePath.replace('.js', '');
-  var compiler = new Compiler(fileContents, name, this.options);
-  return compiler[methods[this.moduleType]]();
+Filter.prototype.getName = function (filePath) {
+  if (this.compilerOptions.anonymous) return null;
+  var name = filePath.replace(/.js$/, '');
+  var main = this.options.main;
+  var packageName = this.options.packageName;
+  return name === main ? packageName : packageName+'/'+name;
 };
+
+Filter.prototype.processString = function (fileContents, filePath) {
+  var name = this.getName(filePath);
+  var compiler = new Compiler(fileContents, name, this.options);
+  return compiler[methods[this.options.moduleType]]();
+};
+
+function rip(obj, props) {
+  return props.reduce(function(ripped, prop) {
+    if (obj[prop]) {
+      ripped[prop] = obj[prop];
+      delete obj[prop];
+    }
+    return ripped;
+  }, {});
+}
 
