@@ -44,18 +44,14 @@ Filter.prototype.validateOptions = function() {
 
 var methods = {
   'cjs': 'toCJS',
-  'amd': 'toAMD',
-  'globals': 'toGlobals'
+  'amd': 'toAMD'
 };
 
 Filter.prototype.getName = function (filePath) {
-  if (this.compilerOptions.anonymous) return null;
+  if (this.compilerOptions.anonymous) {
+    return null;
+  }
   var name = filePath.replace(/.js$/, '');
-  var method = this[this.options.moduleType+'Name'];
-  return method ? method.call(this, name) : name;
-};
-
-Filter.prototype.amdName = function (name) {
   var main = this.options.main;
   var packageName = this.options.packageName;
   return name === main ? packageName : packageName+'/'+name;
