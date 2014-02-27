@@ -1,6 +1,6 @@
 {
   "name": "broccoli-es6-module-filter",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "broccoli filter for es6 modules",
   "main": "index.js",
   "scripts": {
