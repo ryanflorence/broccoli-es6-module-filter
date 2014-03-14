@@ -29,7 +29,9 @@ module.exports = function (broccoli) {
   var cjsTree = filterES6Modules(pickFiles(tree, {
     srcDir: '/',
     destDir: '/cjs'
-  }));
+  }), {
+    moduleType: 'cjs'
+  });
 
   // and AMD
   var amdTree = filterES6Modules(pickFiles(tree, {
@@ -52,7 +54,7 @@ $ broccoli build output
 Options
 -------
 
-- `moduleType` - `amd` or `cjs`
+- `moduleType` - `amd` (default) or `cjs`
 - `anonymous` - for amd output, whether or not to name your modules.
 - `packageName` - for named-amd output, prepends `packageName/` to your
   module names
