@@ -1,6 +1,6 @@
 {
   "name": "broccoli-es6-module-filter",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "broccoli filter for es6 modules",
   "main": "index.js",
   "scripts": {
@@ -18,8 +18,8 @@
     "commonjs"
   ],
   "dependencies": {
+    "broccoli-filter": "^0.1.6",
     "es6-module-transpiler": "git://github.com/rpflorence/es6-module-transpiler#broccoli",
-    "broccoli-filter": "0.1.0",
     "extend": "~1.2.1"
   },
   "devDependencies": {
