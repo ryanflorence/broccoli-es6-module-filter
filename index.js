@@ -18,7 +18,8 @@ Filter.prototype.defaults = {
   anonymous: true,
   moduleType: 'amd',
   packageName: null,
-  main: null
+  main: null,
+  moduleGenerator: null
 };
 
 Filter.prototype.extensions = ['js']
@@ -27,7 +28,7 @@ Filter.prototype.targetExtension = 'js'
 
 Filter.prototype.setOptions = function(options) {
   var merged = extend({}, this.defaults, options);
-  this.options = rip(merged, ['moduleType', 'packageName', 'main']);
+  this.options = rip(merged, ['moduleType', 'packageName', 'main', 'moduleGenerator']);
   this.compilerOptions = merged;
   this.validateOptions();
 }
@@ -36,9 +37,10 @@ Filter.prototype.validateOptions = function() {
   if (
     this.options.moduleType == 'amd' &&
     this.compilerOptions.anonymous === false &&
-    !this.options.packageName
+    !this.options.packageName && 
+    !this.options.moduleGenerator
   ) {
-    throw new Error('You must specify a `packageName` option when using the `anonymous: false` option');
+    throw new Error('You must specify a `packageName` or `moduleGenerator` option when using the `anonymous: false` option');
   }
 }
 
@@ -51,10 +53,20 @@ Filter.prototype.getName = function (filePath) {
   if (this.compilerOptions.anonymous) {
     return null;
   }
-  var name = filePath.replace(/.js$/, '');
-  var main = this.options.main;
-  var packageName = this.options.packageName;
-  return name === main ? packageName : packageName+'/'+name;
+
+  var generator = this.options.moduleGenerator; 
+  if ( generator ) { 
+
+    return generator(filePath);
+
+  } else {
+
+    var name = filePath.replace(/.js$/, '');
+    var main = this.options.main;
+    var packageName = this.options.packageName;
+
+    return name === main ? packageName : packageName+'/'+name;
+  }
 };
 
 Filter.prototype.processString = function (fileContents, filePath) {

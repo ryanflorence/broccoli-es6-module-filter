@@ -54,9 +54,12 @@ Options
 
 - `moduleType` - `amd` or `cjs`
 - `anonymous` - for amd output, whether or not to name your modules.
-- `packageName` - for named-amd output, prepends `packageName/` to your
+- `moduleGenerator` - for amd output, function to provide the module name based on file path paramater
+- `packageName` - for named-amd output when `moduleGenerator` is not
+  present, prepends `packageName/` to your
   module names
-- `main` - for named-amd output, which file is the main entry point of
+- `main` - for named-amd output when `moduleGenerator` is not
+  present, which file is the main entry point of
   your module that will be returned with `require(['your-package'])`
 - every other option supported by the [transpiler][transpiler]
 
