@@ -35,7 +35,6 @@ module.exports = function (broccoli) {
   var amdTree = filterES6Modules(pickFiles(tree, {
     srcDir: '/',
     destDir: '/amd'
-  }), {
     moduleType: 'amd'
   });
 
