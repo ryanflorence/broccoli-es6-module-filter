@@ -18,11 +18,11 @@
     "commonjs"
   ],
   "dependencies": {
-    "broccoli-filter": "^0.1.6",
+    "broccoli-filter": "0.1.6",
     "es6-module-transpiler": "git://github.com/rpflorence/es6-module-transpiler#broccoli",
-    "extend": "~1.2.1"
+    "extend": "1.2.1"
   },
   "devDependencies": {
-    "mocha": "^1.17.1"
+    "mocha": "1.17.1"
   }
 }
